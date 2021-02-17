@@ -4,6 +4,9 @@ import { RDLReportDefinition } from "@grapecity/activereports-react";
 import { ReportDefinition } from "@grapecity/activereports/reportdesigner";
 import reports from "./reports.json";
 import themes from "./themes.json";
+import "@grapecity/activereports/styles/ar-js-designer.css";
+import "@grapecity/activereports/styles/ar-js-viewer.css";
+import "@grapecity/activereports/styles/ar-js-ui.css";
 import "./App.css";
 
 type Modes = "designer" | "viewer";
@@ -35,7 +38,7 @@ export const App = () => {
       const styles = await Promise.all([designer, viewer, ui]);
       setThemeCss(styles.map((style) => style.default || ""));
     };
-    applyTheme();
+    if (theme.value !== 'ar-js') applyTheme();
   }, [theme]);
 
   const handleOnRender = (data: ReportDefinition): Promise<void> => {
