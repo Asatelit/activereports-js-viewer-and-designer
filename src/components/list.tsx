@@ -10,10 +10,15 @@ export interface ListProps {
   selectionChanged: (data: ListItemProp) => void;
 }
 
-export const List = ({ items, currentItem, selectionChanged }: ListProps) => {
+export const List = ({
+  items,
+  currentItem,
+  selectionChanged,
+  title,
+}: ListProps) => {
   return (
     <>
-      <h5 className="list-title">Reports:</h5>
+      <h5 className="list-title">{title}</h5>
       <ul className="list">
         {items.map((item, index) => (
           <li
