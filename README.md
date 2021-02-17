@@ -51,3 +51,16 @@ Your app is ready to be deployed.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and powered by ActiveReportsJS components:
 * [@grapecity/activereports](https://www.npmjs.com/package/@grapecity/activereports) - ActiveReportsJS (ARJS) is JavaScript version of ActiveReports that can work on any modern browser.
 * [@grapecity/activereports-react](https://www.npmjs.com/package/@grapecity/activereports-react) - This package is a part of the ActiveReportsJS and provides react wrapper for ARJS Viewer Component.
+
+[node]: https://nodejs.org
+[react]: https://github.com/facebook/react
+[ts]: https://typescriptlang.org/
+[babel]: http://babeljs.io/
+[prettier]: https://prettier.io/
+[yarn]: https://yarnpkg.com
+[code]: https://code.visualstudio.com/
+[vcsnippets]: https://marketplace.visualstudio.com/items?itemName=rebornix.project-snippets
+[vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
+[vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[vcprettier]: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+[jest]: http://facebook.github.io/jest/
