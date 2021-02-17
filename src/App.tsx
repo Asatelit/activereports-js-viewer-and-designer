@@ -1,104 +1,67 @@
-import React, { useState } from "react";
-import { Designer, Viewer, List, ListItemProp } from "./components";
-import { RDLReportDefinition } from "@grapecity/activereports-react";
+import React from "react";
+import { List, Viewer } from "./components";
 import { ReportDefinition } from "@grapecity/activereports/reportdesigner";
-import reports from "./reports.json";
+import { AppMode, ReportDescriptior } from "./types";
+import "./App.css";
 import themes from "./themes.json";
+import reports from "./reports.json";
+import { useThemes, useDesigner } from "./hooks";
 import "@grapecity/activereports/styles/ar-js-designer.css";
 import "@grapecity/activereports/styles/ar-js-viewer.css";
 import "@grapecity/activereports/styles/ar-js-ui.css";
-import "./App.css";
 
-type Modes = "designer" | "viewer";
-
-interface Defenitions {
-  [key: string]: RDLReportDefinition;
-}
 
 export const App = () => {
-  const [mode, setMode] = React.useState<Modes>("viewer");
-  const [defenitions, setDefenitions] = useState<Defenitions>({});
-  const [themeCss, setThemeCss] = useState<string[]>([]);
-
-  const [theme, setTheme] = useState<ListItemProp>({
-    name: themes[0].name,
-    value: themes[0].class,
-  });
-
-  const [report, setReport] = React.useState<ListItemProp>({
-    name: reports[0].name,
-    value: reports[0].src,
-  });
-
-  React.useEffect(() => {
-    const applyTheme = async () => {
-      const designer = import(`!!raw-loader!@grapecity/activereports/styles/${theme.value}-designer.css`);
-      const viewer = import(`!!raw-loader!@grapecity/activereports/styles/${theme.value}-viewer.css`);
-      const ui = import(`!!raw-loader!@grapecity/activereports/styles/${theme.value}-ui.css`);
-      const styles = await Promise.all([designer, viewer, ui]);
-      setThemeCss(styles.map((style) => style.default || ""));
-    };
-    if (theme.value !== 'ar-js') {
-      applyTheme()
-    } else {
-      setThemeCss([]);
-    };
-  }, [theme]);
+  const reportMap = React.useRef<ReportDescriptior[]>(
+    reports.map((report) => ({ ...report }))
+  );
+  const [mode, setMode] = React.useState<AppMode>("viewer");
+  const [themeIndex, setThemeIndex, themeCss] = useThemes(themes);
+  const [reportIndex, setReportIndex] = React.useState<number>(0);
+  
 
   const handleOnRender = (data: ReportDefinition): Promise<void> => {
-    setDefenitions({ ...defenitions, [report.name]: data.definition });
+    reportMap.current[reportIndex].definition = data.definition;
     setMode("viewer");
     return Promise.resolve();
   };
+  
+  useDesigner({report: reportMap.current[reportIndex], onRender: handleOnRender, hostElem: "#arjs-designer-host"} );
 
   const renderReportsList = (
     <List
       title="Reports"
-      items={reports.map((item) => ({
-        name: item.name,
-        value: item.src,
-      }))}
-      currentItem={report}
-      selectionChanged={(report) => setReport(report)}
+      items={reports.map((report) => report.label)}
+      currentItemIndex={reportIndex}
+      selectionChanged={(index) => setReportIndex(index)}
     />
   );
 
   const renderThemesList = (
     <List
       title="Themes"
-      items={themes.map((item) => ({
-        name: item.name,
-        value: item.class,
-      }))}
-      currentItem={theme}
-      selectionChanged={(theme) => setTheme(theme)}
+      items={themes.map((theme) => theme.name)}
+      currentItemIndex={themeIndex}
+      selectionChanged={(index) => setThemeIndex(index)}
     />
   );
 
   return (
     <>
-      <div id="app" className={theme.value}>
+      <div id="app" className={themes[themeIndex].id}>
         <div id="list-host">
           <div className="flex-grow-1">{renderReportsList}</div>
           <div className="flex-grow-0">{renderThemesList}</div>
         </div>
         <div id="host">
-          {mode === "designer" && (
-            <Designer
-              report={{
-                id: report.value,
-                displayName: report.name,
-                definition: defenitions[report.name],
-              }}
-              onRender={handleOnRender}
-            />
-          )}
-          {mode === "viewer" && (
+          <div id="arjs-designer-host" className={mode === "viewer" ? "hidden" : ""}>
+          </div>
+          <div id="arjs-viewer-host" className={mode === "designer" ? "hidden" : ""}>
             <Viewer
-              report={defenitions[report.name] || report.value}
+              report={reportMap.current[reportIndex]}
               onEdit={() => setMode("designer")}
             />
-          )}
+          </div>
         </div>
       </div>
       {themeCss.map((html, key) => (

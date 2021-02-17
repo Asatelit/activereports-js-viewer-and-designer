@@ -1,18 +1,8 @@
-export interface ListItemProp {
-  name: string;
-  value: string;
-}
-
-export interface ListProps {
-  title: string;
-  items: ListItemProp[];
-  currentItem?: ListItemProp;
-  selectionChanged: (data: ListItemProp) => void;
-}
+import { ListProps } from "../types";
 
 export const List = ({
   items,
-  currentItem,
+  currentItemIndex,
   selectionChanged,
   title,
 }: ListProps) => {
@@ -22,13 +12,13 @@ export const List = ({
       <ul className="list">
         {items.map((item, index) => (
           <li
-            key={`${item.name}_${index}`}
+            key={`${item}_${index}`}
             className={`list-item ${
-              item.name === currentItem?.name ? "active gc-accent-color" : ""
+              index === currentItemIndex ? "active gc-accent-color" : ""
             }`}
-            onClick={() => selectionChanged(item)}
+            onClick={() => {selectionChanged(index)}}
           >
-            {item.name}
+            {item}
           </li>
         ))}
       </ul>

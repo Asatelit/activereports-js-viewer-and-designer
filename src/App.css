@@ -27,7 +27,8 @@
   flex: 1 1 auto;
 }
 
-#arjs-designer-host {
+#arjs-designer-host,
+#arjs-viewer-host {
   height: 100%;
 }
 
@@ -75,4 +76,8 @@
 
 .list-item.active {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.hidden {
+  display: none;
 }

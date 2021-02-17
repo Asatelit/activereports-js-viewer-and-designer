@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Viewer as ReportViewer,
-  RDLReportDefinition,
 } from "@grapecity/activereports-react";
 import "@grapecity/activereports/pdfexport";
 import "@grapecity/activereports/htmlexport";
 import "@grapecity/activereports/xlsxexport";
+import { ReportDescriptior, ViewerProps } from "../types";
 
-export interface ViewerProps {
-  report: string | RDLReportDefinition;
-  onEdit: () => void;
-}
 
-export const Viewer = ({ report, onEdit }: ViewerProps) => {
+export const Viewer = ({ report, onEdit}: ViewerProps) => {
   const ref = React.useRef<ReportViewer>(null);
+  
+  const reportUri: (report: ReportDescriptior)=>any = useCallback(report=>report.definition || report.url, []);
 
   React.useEffect(() => {
     const viewerInstance = ref.current?.Viewer;
@@ -47,8 +45,11 @@ export const Viewer = ({ report, onEdit }: ViewerProps) => {
         "$galleymode",
       ],
     });
-    viewerInstance.open(report);
-  }, [report, ref]);
+  }, [onEdit]);
 
-  return <ReportViewer ref={ref} report={{ Uri: report as any }} />;
+  React.useEffect(()=>{
+    ref.current?.Viewer.open(reportUri(report));
+  });
+
+  return <ReportViewer ref={ref} />;
 };

@@ -1,18 +1,18 @@
 [
   {
-    "class": "ar-js",
+    "id": "ar-js",
     "name": "Default"
   },
   {
-    "class": "light-blue",
+    "id": "light-blue",
     "name": "Light Blue"
   },
   {
-    "class": "green",
+    "id": "green",
     "name": "Green"
   },
   {
-    "class": "dark-yellow",
+    "id": "dark-yellow",
     "name": "Dark Yellow"
   }
 ]

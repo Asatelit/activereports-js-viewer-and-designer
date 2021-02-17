@@ -1,23 +1,23 @@
 [
     {
-        "name": "Tabular",
-        "src": "/assets/tabular-report.rdlx-json"
+        "label": "Tabular",
+        "url": "/assets/tabular-report.rdlx-json"
     },
     {
-        "name": "Banded",
-        "src": "/assets/BandedReport.rdlx-json"
+        "label": "Banded",
+        "url": "/assets/BandedReport.rdlx-json"
     },
     {
-        "name": "Summary",
-        "src": "/assets/SummaryReport.rdlx-json"
+        "label": "Summary",
+        "url": "/assets/SummaryReport.rdlx-json"
     },
     {
-        "name": "Drill-down",
-        "src": "/assets/DrillDownReport.rdlx-json"
+        "label": "Drill-down",
+        "url": "/assets/DrillDownReport.rdlx-json"
     },
     {
-        "name": "Drill-through",
-        "src": "/assets/DrillThroughMainReport.rdlx-json"
+        "label": "Drill-through",
+        "url": "/assets/DrillThroughMainReport.rdlx-json"
     }
 
 ]
