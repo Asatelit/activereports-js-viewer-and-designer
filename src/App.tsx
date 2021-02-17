@@ -38,7 +38,11 @@ export const App = () => {
       const styles = await Promise.all([designer, viewer, ui]);
       setThemeCss(styles.map((style) => style.default || ""));
     };
-    if (theme.value !== 'ar-js') applyTheme();
+    if (theme.value !== 'ar-js') {
+      applyTheme()
+    } else {
+      setThemeCss([]);
+    };
   }, [theme]);
 
   const handleOnRender = (data: ReportDefinition): Promise<void> => {
