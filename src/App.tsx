@@ -4,7 +4,7 @@ import { RDLReportDefinition } from "@grapecity/activereports-react";
 import { ReportDefinition } from "@grapecity/activereports/reportdesigner";
 import reports from "./reports.json";
 import themes from "./themes.json";
-import "./app.css";
+import "./App.css";
 
 type Modes = "designer" | "viewer";
 
